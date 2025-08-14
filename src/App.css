@@ -1,0 +1,320 @@
+/* --- THEME DEFINITIONS --- */
+/* This is where we define the colors for both themes */
+
+/* Light (Apple-inspired) Theme */
+[data-theme='light'] {
+  --background-primary: #f5f5f7;
+  --background-secondary: #ffffff;
+  --panel-background: #ffffff;
+  --primary-glow: #007aff;
+  --primary-glow-hover: #0056b3;
+  --danger-color: #ff3b30;
+  --danger-color-hover: #c7001e;
+  --text-primary: #1d1d1f;
+  --text-secondary: #6e6e73;
+  --border-color: #d2d2d7;
+  --shadow-color: rgba(0, 0, 0, 0.05);
+  --transition-speed: 0.3s;
+  --border-radius: 12px;
+}
+
+/* Dark (Cyberpunk) Theme */
+[data-theme='dark'] {
+  --background-primary: #0a0a0f;
+  --background-secondary: #1a1a20;
+  --panel-background: rgba(20, 20, 30, 0.75);
+  --primary-glow: #00f7ff;
+  --primary-glow-hover: #00aab3;
+  --danger-color: #f400ff;
+  --danger-color-hover: #a100a8;
+  --text-primary: #e6e6e6;
+  --text-secondary: #a0a0b0;
+  --border-color: rgba(0, 247, 255, 0.3);
+  --shadow-color: rgba(0, 247, 255, 0.1);
+  --transition-speed: 0.3s;
+  --border-radius: 10px;
+}
+
+
+/* --- GENERAL STYLES (USING THEME VARIABLES) --- */
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;500;700&display=swap');
+
+html {
+  color-scheme: light dark;
+}
+
+body {
+  font-family: 'Roboto Mono', monospace;
+  background-color: var(--background-primary);
+  color: var(--text-primary);
+  transition: background-color var(--transition-speed) ease;
+}
+
+[data-theme='dark'] body {
+  background-image: 
+    linear-gradient(var(--border-color) 1px, transparent 1px),
+    linear-gradient(to right, var(--border-color) 1px, var(--background-primary) 1px);
+  background-size: 40px 40px;
+}
+
+#loader {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.spinner {
+  width: 50px;
+  height: 50px;
+  border: 5px solid var(--border-color);
+  border-top-color: var(--primary-glow);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.container {
+  width: 95%;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 40px 20px;
+  animation: fadeInSlideUp 0.6s ease-out forwards;
+}
+
+@keyframes fadeInSlideUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.app-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+h1 {
+  font-size: 2.5rem;
+  font-weight: 600;
+  letter-spacing: -0.5px;
+  color: var(--primary-glow);
+  text-shadow: 0 0 5px var(--primary-glow);
+}
+
+.theme-toggle {
+  width: 50px;
+  height: 26px;
+  background-color: var(--background-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: 13px;
+  cursor: pointer;
+  padding: 3px;
+  transition: background-color var(--transition-speed) ease;
+}
+
+.toggle-slider {
+  width: 20px;
+  height: 20px;
+  background-color: var(--text-secondary);
+  border-radius: 50%;
+  transition: transform 0.3s ease-in-out, background-color var(--transition-speed) ease;
+}
+
+.toggle-slider.dark {
+  transform: translateX(24px);
+  background-color: var(--primary-glow);
+}
+
+.dashboard-layout {
+  display: grid;
+  grid-template-columns: 2.5fr 1fr;
+  gap: 2rem;
+  align-items: flex-start;
+}
+
+.data-section {
+  background: var(--panel-background);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius);
+  padding: 1.5rem;
+  box-shadow: 0 0 20px var(--shadow-color);
+  backdrop-filter: blur(10px);
+  transition: background var(--transition-speed) ease;
+}
+
+.form-section h2 {
+  font-size: 1.2rem;
+  color: var(--text-secondary);
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.user-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.form-row {
+  display: flex;
+  gap: 1rem;
+}
+
+.form-row input { flex: 1; }
+
+.user-form input, .user-form textarea, .table-controls select, .search-input {
+  background-color: var(--background-primary);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 12px;
+  font-size: 1rem;
+  color: var(--text-primary);
+  font-family: 'Roboto Mono', monospace;
+  transition: all var(--transition-speed) ease;
+}
+
+.user-form textarea { resize: vertical; min-height: 80px; }
+
+.user-form input:focus, .user-form textarea:focus, .table-controls select:focus, .search-input:focus {
+  outline: none;
+  border-color: var(--primary-glow);
+  box-shadow: 0 0 10px var(--primary-glow);
+}
+
+.table-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  gap: 1rem;
+}
+
+.table-controls .search-input { flex-grow: 1; }
+
+.user-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0 8px;
+}
+
+.user-table th {
+  padding: 12px 15px;
+  text-align: left;
+  color: var(--text-secondary);
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.user-table td {
+  padding: 15px;
+  background-color: var(--background-secondary);
+}
+
+.user-table td:first-child { border-radius: var(--border-radius) 0 0 var(--border-radius); }
+.user-table td:last-child { border-radius: 0 var(--border-radius) var(--border-radius) 0; }
+
+@keyframes row-in {
+  from { opacity: 0; transform: translateX(-20px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+.user-table tbody tr {
+  opacity: 0;
+  animation: row-in 0.5s ease-out forwards;
+}
+
+.actions { display: flex; gap: 10px; }
+
+.actions button {
+  background: none;
+  border: 1px solid var(--text-secondary);
+  color: var(--text-secondary);
+  padding: 8px 12px;
+  border-radius: 6px;
+  transition: all var(--transition-speed) ease;
+}
+
+.actions button:hover {
+  color: var(--text-primary);
+  border-color: var(--text-primary);
+  transform: translateY(-2px);
+}
+
+.actions .delete-btn {
+  color: var(--danger-color);
+  border-color: var(--danger-color);
+}
+
+.actions .delete-btn:hover {
+  background: var(--danger-color);
+  color: white;
+  border-color: var(--danger-color);
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 1.5rem;
+  gap: 10px;
+}
+
+.pagination span {
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+.btn {
+  padding: 12px 20px;
+  font-size: 1rem;
+  font-weight: 500;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all var(--transition-speed) ease;
+}
+
+.btn-primary {
+  background-color: var(--primary-glow);
+  color: var(--background-color);
+  font-weight: 700;
+}
+
+.btn-primary:hover {
+  background-color: var(--primary-glow-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px var(--shadow-color);
+}
+
+.pagination .btn {
+  background-color: var(--background-secondary);
+  border: 1px solid var(--border-color);
+  color: var(--text-primary);
+}
+
+.pagination .btn:hover:not(:disabled) {
+  border-color: var(--primary-glow);
+  color: var(--primary-glow);
+  transform: translateY(-2px);
+}
+
+.pagination .btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Toastify Customization */
+.Toastify__toast {
+  background: var(--panel-background) !important;
+  border: 1px solid var(--border-color) !important;
+  backdrop-filter: blur(10px) !important;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.5) !important;
+  border-radius: 8px !important;
+  font-family: 'Roboto Mono', monospace !important;
+}
+
+.Toastify__progress-bar {
+  background: var(--primary-glow) !important;
+}
